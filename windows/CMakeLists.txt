@@ -5,21 +5,15 @@ endif()
 set(PROJECT_NAME "flutter_tts")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
-################ NuGet install begin ################
+################ NuGet intall begin ################
 find_program(NUGET_EXE NAMES nuget)
 if(NOT NUGET_EXE)
-    message("NUGET.EXE not found.")
-    message(FATAL_ERROR "Please install this executable, and run CMake again.")
+	message("NUGET.EXE not found.")
+	message(FATAL_ERROR "Please install this executable, and run CMake again.")
 endif()
 
-execute_process(
-    COMMAND ${NUGET_EXE}
-            install
-            Microsoft.Windows.CppWinRT
-            -Version 2.0.210503.1
-            -ExcludeVersion
-            -OutputDirectory ${CMAKE_BINARY_DIR}/packages
-)
+execute_process(COMMAND ${NUGET_EXE} install "Microsoft.Windows.CppWinRT" -Version 	2.0.210503.1 -ExcludeVersion -OutputDirectory ${CMAKE_BINARY_DIR}/packages)
+
 ################ NuGet install end ################
 
 # This value is used when generating builds using this plugin, so it must
@@ -45,7 +39,7 @@ endif()
 # List of absolute paths to libraries that should be bundled with the plugin
 set(flutter_tts_bundled_libraries
   ""
-  PARENT_SCOPE
+  PARENT_SCOPE)
 ################ NuGet import begin ################
 set_target_properties(${PLUGIN_NAME} PROPERTIES VS_PROJECT_IMPORT
   ${CMAKE_BINARY_DIR}/packages/Microsoft.Windows.CppWinRT/build/native/Microsoft.Windows.CppWinRT.props
@@ -56,4 +50,3 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE
 )
 ################ NuGet import end ################
 
-)
